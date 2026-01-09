@@ -45,25 +45,17 @@ betting-website/
 
 Follow these steps to run the project locally:
 
-Clone the repository
-
-git clone https://github.com/pratyushkashyyy/betting-website.git
-
-
 Navigate to the project directory
 
 cd betting-website
-
 
 Install dependencies
 
 pip install -r requirements.txt
 
-
 Run the application
 
 python main.py
-
 
 Open in browser
 
