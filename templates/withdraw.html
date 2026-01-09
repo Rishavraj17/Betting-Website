@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}
+    dashboard
+{% endblock %}
+{% block css %} <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/withdraw.css') }}"> {% endblock %}
+  {% block content %}
+  {% if success_message %}
+  <script>
+      const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+      });
+
+      Toast.fire({
+          icon: "success",
+          title: "{{ success_message }}"
+      });
+  </script>
+{% endif %}
+{% if error_message %}
+  <script>
+      const Toast1 = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+      });
+
+      Toast1.fire({
+          icon: "warning",
+          title: "{{ error_message }}"
+      });
+  </script>
+{% endif %}
+<div class="form-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+	{% if messages %}
+	<ul>
+	{% for category, message in messages %}
+		<li class="{{ category }}">{{ message }}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
+    
+    <form action="/withdraw" method="POST">
+    <h2 class="heading">Withdraw Coins</h2>
+    <div class="form-group">
+        <label for="balance">Your Balance :</label>
+        <input type="text" id="balance" name="balance" placeholder="{{ user['balance'] }}" readonly>
+      </div>
+    <div class="form-group">
+        <label for="coins">Enter Coins:</label>
+        <input type="number" id="coins" name="coins" min="200" placeholder="Minimum 200 coins" required>
+    </div>
+    <div class="form-group">
+        <label for="source">To:</label>
+        <select id="source" name="payment-method" required>
+            <option value="phone_pay">Phone Pay</option>
+            <option value="google_pay">Google Pay</option>
+            <option value="paytm">Paytm</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="paytm_id">Payment ID:</label>
+        <input type="text" id="paytm_id" name="upi_id" placeholder="Enter UPI ID" required>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="withdraw-button">Withdraw</button>
+    </div>
+</form>
+</div>
+
+{% endblock %}

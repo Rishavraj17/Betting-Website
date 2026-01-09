@@ -1,0 +1,333 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body { 
+    background-image: linear-gradient(45deg, #efefef 25%, rgba(239, 239, 239, 0) 25%, rgba(239, 239, 239, 0) 75%, #efefef 75%, #efefef), linear-gradient(45deg, #efefef 25%, rgba(239, 239, 239, 0) 25%, rgba(239, 239, 239, 0) 75%, #efefef 75%, #efefef);
+    font-family: Arial, sans-serif;
+}
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white; /* White background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's above other content */
+}
+.dot {
+    width: 20px;
+    height: 20px;
+    background-color: #8330d1;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 10px;
+    animation: jump 1.5s infinite ease-in-out;
+}
+.dot:nth-child(2) {
+    animation-delay: 0.5s; /* Delay for the second ball */
+}
+.dot:nth-child(3) {
+    animation-delay: 1s; /* Delay for the third ball */
+}
+@keyframes jump {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.header {
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: rgb(27, 21, 21);
+}
+
+/* User name styles */
+.user-name {
+    color: white;
+}
+
+/* Menu button styles */
+.menu-icon {
+    padding: 10px 20px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.menu-icon:hover {
+    background-color: #2d5591;
+}
+
+.menu-icon:active {
+    opacity: 0.7;
+}
+
+/* Navbar styles */
+.navbar-menu {
+    list-style-type: none;
+    
+    flex-direction: column;
+    background-color: rgb(27, 21, 21);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+    z-index: 10;
+    transition: opacity 0.5s, visibility 0.5s;
+    opacity: 0;
+    width: 200px;
+
+    visibility: hidden;
+    transition: left 0.3s ease; 
+   /* Adjust as needed */
+    overflow-y: hidden;
+
+}
+
+.navbar-menu.active {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-menu li {
+    margin: 0px 0;
+}
+
+.navbar-menu li button {
+
+    background-color: #0d6efd;
+    color: white;
+    overflow: inherit;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    width: 150px;
+    height: 4 0px;
+    margin-bottom: 10px;
+    transition: background-color 3s ease-in, opacity 3s ease-in;
+    padding: 10px;
+    
+}
+
+.navbar-menu li button:hover {
+    background-color: #2d5591;
+}
+
+.navbar-menu li button:active {
+    opacity: 0.7;
+}
+
+@media only screen and (max-width: 600px) {
+    .navbar-menu {
+      overflow-y: auto;
+      max-height: calc(100vh - 100px); /* Adjust the max height as needed */
+    }
+  
+}
+
+.first-div {
+    background-color: #0d6efd;
+    color: #aee6f0;
+    border: 2px solid darkpink; /* Dark pink border */
+    padding: 10px;
+}
+
+.second-div {
+    display: flex;
+    flex-direction: row;
+    color: rgb(9, 172, 253);
+    padding: 10px;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+}
+
+.third-div {
+    border: none;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    color: #eeeeee;
+    font-weight: 600;
+    font-size: 15px;
+    
+    padding: 10px 40px;
+    margin: 0 auto;
+}
+.third-div {
+	text-align: center;
+	
+}
+
+.small {
+  width: 120px;
+  border-radius: 10px;
+}
+.diagonal {
+    position: relative;
+    line-height: 50px;
+    background-color: #0d6efd;
+   
+    
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
+    z-index: 1;
+    padding: 0px;
+    border: 2px solid black;
+  }
+  .diagonal:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500%;
+
+    background: #bd34b4;
+    z-index: -1;
+    transform-origin: 0% 0%;
+    transform: translateX(calc(20% - 25px)) translateY(10%) rotate(-45deg);
+    transform: translateY(10%) translateX(16%) rotate(-45deg);
+    transition: transform .3s;
+  }
+  .diagonal:hover::after {
+    transform: translateY(10%) translateX(-25px) rotate(-45deg);
+  }
+ 
+
+.footer {
+    bottom: auto;
+    position: scroll;
+    width: 100%;
+    background: linear-gradient(45deg, #4c4b4e, #ff69b4); 
+    height: auto
+}
+a{
+    text-decoration: none;
+}
+.mr{
+    border-radius: 10px;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    line-height: 25px;
+    flex-wrap: wrap;
+    width: 80%; 
+    padding: 15px;     
+    color: aliceblue;
+    cursor: pointer;
+}
+.diagonal:active{
+  
+    background: rgb(56, 112, 215);
+    color: black;
+}
+
+.rights {
+    margin-left: auto;
+}
+
+.navbar-menu li button{
+    padding: 10px;
+}
+.icon-button .fas.fa-copy{
+    /* background-color: rgb(4, 4, 4); */
+    border: none;
+    border-radius: 1px;
+    cursor: pointer;   
+}
+.copy-button i {
+    color: rgb(10, 10, 10); 
+}
+
+.pay-button{
+    border-color: #0d6efd;
+    border-radius: 7px;
+    cursor: pointer;
+    padding: 5px 5px;
+}
+.pay-button-hover{
+    border-radius: 7px;
+
+}
+
+#button-2 {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  #button-2 a {
+    position: relative;
+    transition: all .35s ease-Out;
+  }
+  
+  #slide {
+    width: 100%;
+    height: 100%;
+    left: -200px;
+    background: #989d9f2b;
+    position: absolute;
+    transition: all .35s ease-Out;
+    bottom: 0;
+  }
+  
+  #button-2:hover #slide {
+    left: 0;
+  }
+  
+  #button-2:hover a {
+    color: #000000;
+  }
+  
+@media screen and (max-width: 600px){
+    .footer-content{
+        display: flex;
+        flex-direction: column;
+        
+    }
+    
+    .navbar-menu{
+        max-height: 100%;
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+    }
+    .second-div button{
+        border: 2px solid black;
+        padding: 3px;
+    }
+}

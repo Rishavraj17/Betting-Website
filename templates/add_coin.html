@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>   
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+    <title>Add Coin</title>
+    <style>
+        #add-coin-table-container {
+            overflow-x: auto; 
+            max-width: 100%; 
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <script>
+                const Toast1 = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    }
+                });
+
+                Toast1.fire({
+                    icon: "{{ category }}",
+                    title: "{{ message }}"
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}   
+
+<div id="add-coin-section">
+    <div class="add-coin-heading">
+        <h3>Add Coin</h3>
+        <form action="/admin/search/addcoin" method="POST">
+            <input type="text" name="search" class="search-input" placeholder="Search">
+        </form>
+    </div>
+
+    <div id="add-coin-table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>UTR</th>
+                    <th>Payment Method</th>
+                    <th>Coin Amount</th>
+                    <th>Date and time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                    <center>
+                    <td {% if payment['status'] == 'pending' %} class="status" {% endif %}>{{ payment['id'] }}</td>
+                    <td {% if payment['status'] == 'pending' %} class="status" {% endif %}>{{payment['username']}}</td>
+                    <td {% if payment['status'] == 'pending' %} class="status" {% endif %}>{{payment['utr']}}</td>
+                    <td {% if payment['status'] == 'pending' %} class="status" {% endif %}>{{payment['transaction_type']}}</td>
+                    <td {% if payment['status'] == 'pending' %} class="status" {% endif %}>{{payment['amount']}}</td>
+                    <td {% if payment['status'] == 'pending' %} class="status" {% endif %}>{{payment['transaction_date']}}</td>
+                    <td {% if payment['status'] == 'pending' %} class="status" {% endif %}>
+                        <form action="/admin/add_coin" method="POST">
+                        <input type="hidden" name="amount" value="{{ payment['amount'] }}">
+                        <input type="hidden" name="username" value="{{ payment['username'] }}">
+                        <input type="hidden" name="id" value="{{ payment['id'] }}">
+                        {% if payment['status'] == "pending" %}
+                        <button class="app-btn" name="button" value="approved" type="submit">Approve</button>
+                        <button class="deny-btn" name="button" value="denied" type="submit">Deny</button>
+                        <button class="deny-btn" name="button" value="duplicate" type="submit">Duplicate</button>
+                        </form>
+                        {% elif payment['status'] == "approved" %}
+                        <button class="app-btn" type="button">Approved</button>
+                        {% elif payment['status'] == "denied" %}
+                        <button class="deny-btn" type="button">Denied</button>
+                        {% elif payment['status'] == "duplicate" %}
+                        <button class="deny-btn" style="background-color: yellow; color: black;" type="button">Duplicate</button>
+                        {% endif %}
+                    </td>
+                </center>
+            </tr>
+            {% endfor %}
+            
+            <div class="pagination  nextpage">
+                {% if page > 1 %}
+    <a href="{{ url_for('admin_addcoin', page=page-1) }}">Previous</a>
+{% endif %}
+
+{% for p in range(1, total_pages+1) %}
+    {% if page - 5 <= p <= page + 5 %}
+        <a href="{{ url_for('admin_addcoin', page=p) }}" {% if p == page %}class="active"{% endif %}>{{ p }}</a>
+    {% elif p == 1 or p == total_pages %}
+        <a href="{{ url_for('admin_addcoin', page=p) }}">{{ p }}</a>
+    {% elif p == page - 6 or p == page + 6 %}
+        <span>...</span>
+    {% endif %}
+{% endfor %}
+
+{% if page < total_pages %}
+    <a href="{{ url_for('admin_addcoin', page=page+1) }}" class="next">Next</a>
+{% endif %}
+
+                </div>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

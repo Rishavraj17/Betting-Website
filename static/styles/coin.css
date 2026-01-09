@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #302b63;
+    
+ } 
+ BODY{
+        background-image: url('/static/bg.jpg');
+            background-size: fixed;
+        }
+  
+
+.payment-heading {
+    background-color: black;
+    color: rgb(243, 235, 235);
+    text-align: center;
+    margin-top: 10px;
+    font-size: larger;
+    border-radius: 16px;
+    margin-bottom: 10px;
+  }
+
+
+  .form-container {
+    max-width: 500px;
+    margin: 50px auto 0 auto;
+    border-radius: 8px;
+    background-color: #fff;
+    background-image: linear-gradient(45deg,#efefef 25%,rgba(239,239,239,0) 25%,rgba(239,239,239,0) 75%,#efefef 75%,#efefef),linear-gradient(45deg,#efefef 25%,rgba(239,239,239,0) 25%,rgba(239,239,239,0) 75%,#efefef 75%,#efefef);
+    border: 2px solid black;
+    margin-bottom: 40px;
+}
+
+.form-container .heading {
+    margin-top: 20px;
+    text-align: center;
+    color: #007bff; /* Change heading color */
+}
+
+.form-group {
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    padding: 10px;
+    display: block;
+    font-weight: bold;
+}
+
+
+.form-group input[type="number"],
+.form-group input[type="text"],
+.form-group select {
+    width: calc(100% - 16px); 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+   
+
+}
+
+.form-group .add-button {
+    display: block;
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 8px; 
+
+}
+
+.pay-by-qr {
+    
+    text-align: center;
+    margin-top: -20px;
+    color: #007bff; /* Change text color */
+}
+
+
+@media screen and (max-width: 600px) {
+    .form-container{
+        max-width: 80%;
+        
+    }
+}

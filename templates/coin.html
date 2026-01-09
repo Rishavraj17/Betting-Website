@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}
+    dashboard
+{% endblock %}
+{% block css %} <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/coin.css') }}"> {% endblock %}
+  {% block content %}
+
+<div class="payment-heading">
+    <p>Payment at: {{settings['upi_id']}}</p>
+</div>
+
+<div class="form-container">
+    <form action="/addcoin" method="POST">
+    <h2 class="heading">Add Coin</h2>
+    
+    <div class="form-group">
+        
+                    {% if success_message %}
+                    <script>
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer);
+                                toast.addEventListener('mouseleave', Swal.resumeTimer);
+                            }
+                        });
+                
+                        Toast.fire({
+                            icon: "success",
+                            title: "{{ success_message }}"
+                        });
+                    </script>
+                {% endif %}
+            
+        <label for="coins">Enter Coins:</label>
+        <input type="number" id="coins" name="coins" min="30" placeholder="Minimum 30 coins" required>
+    
+        <label for="source">From:</label>
+        <select id="source" name="payment-method" required>
+            <option value="phone_pay">Phone Pay</option>
+            <option value="google_pay">Google Pay</option>
+            <option value="paytm">Paytm</option>
+        </select>
+
+        <label for="utr">UTR of Transaction:</label>
+        <input type="number" id="utr" name="utr" placeholder="Enter UTR" required>
+
+        <button type="submit" class="add-button">Add</button>
+    </div>
+    
+    </form>
+</div>
+{% endblock %} 

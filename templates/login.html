@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/login.css') }}">
+    	
+</head>
+<body>
+<div id="preloader">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+</div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<script>
+						const Toast1 = Swal.mixin({
+							toast: true,
+							position: "top-end",
+							showConfirmButton: false,
+							timer: 3000,
+							timerProgressBar: true,
+							didOpen: (toast) => {
+								toast.addEventListener('mouseenter', Swal.stopTimer);
+								toast.addEventListener('mouseleave', Swal.resumeTimer);
+							}
+						});
+	
+						Toast1.fire({
+							icon: "{{ category }}",
+							title: "{{ message }}"
+						});
+					</script>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+<div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true">
+    <div class="LOGin" id="login-page">
+        {% if error_message %}
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    }
+                });
+
+                Toast.fire({
+                    icon: "error",
+                    title: "{{ error_message }}"
+                });
+            </script>
+        {% endif %}
+        <form action="/login" method="POST">
+            <label for="chk" aria-hidden="true" class="logme" style="color: black;"><img src="static/logo.png" width="140px" style="transform: scale(1.8); transition: transform 0.2s;" /></label>
+            <input type="tel" name="phone" placeholder="Phone number" required="" minlength="10" maxlength="10">
+            <input class="form-control" id="contact" name="password" type="text" minlength="6" placeholder="Password" />
+            <div class="forget"><a href="/forget-password"> Forgot Password?</a></div>
+            <button type="submit">Login</button>
+        </form>
+
+    </div>
+
+    <div class="SIGNup">
+        <form action="/get-otp" method="POST">
+            <label class="heads" for="chk" aria-hidden="true">Signup</label>
+            <div class="otp">
+                <input type="tel" placeholder="Phone Number" name="phone" minlength="10" maxlength="10">
+                <button type="submit">Get Otp</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const preloader = document.getElementById('preloader');
+        const loginPage = document.querySelector('.main');
+
+        setTimeout(function(){
+            preloader.style.display = 'none';
+            loginPage.style.display = 'block';
+        }, 1000);
+    });
+</script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/65e5bbfd9131ed19d974c1a2/1ho4mclmg';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+</html>

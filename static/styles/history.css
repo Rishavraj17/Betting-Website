@@ -1,0 +1,128 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+   
+  }
+  BODY{
+    background-image: url("/static/bg.jpg");
+        background-size: fixed;
+    }
+  
+  .container {
+    max-width: 500px;
+    margin: 20px auto  auto;
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #73b3f3;
+    padding-left: 50px;
+  }
+  
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    
+    
+    
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .play-button {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .play-button:hover {
+    background-color: #45a049;
+  }
+  
+  .withdraw-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .withdraw-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  .transaction-button {
+    background-color: #2196F3;
+    color: white;
+  }
+  
+  .transaction-button:hover {
+    background-color: #1976D2;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: #c6e1f1; /* Enable smooth scrolling on iOS devices */
+  }
+  
+  .table-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ccc;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+  }
+  .but{
+    margin: 4px;
+  }
+  @media only screen and (max-width: 600px) {
+    th, td {
+
+      width: auto;
+    }
+    .table-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS devices */
+    }
+    .container{
+      margin-bottom: 10PX;
+      display: flex;
+      width: 95%;
+     
+    }
+    .button-container{
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5PX;
+    }
+    
+    
+    
+    
+  }
+  

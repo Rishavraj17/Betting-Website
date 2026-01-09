@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>   
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+    <title>Document</title>
+    <style>
+        #result-table-container {
+            overflow-x: auto; 
+            max-width: 100%; 
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<script>
+						const Toast1 = Swal.mixin({
+							toast: true,
+							position: "top-end",
+							showConfirmButton: false,
+							timer: 3000,
+							timerProgressBar: true,
+							didOpen: (toast) => {
+								toast.addEventListener('mouseenter', Swal.stopTimer);
+								toast.addEventListener('mouseleave', Swal.resumeTimer);
+							}
+						});
+	
+						Toast1.fire({
+							icon: "{{ category }}",
+							title: "{{ message }}"
+						});
+					</script>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+
+<div id="result-section" >
+    <div class="result-heading">
+        <h3>Result</h3>
+        <form action="/admin/search/result" method="POST">
+            <input type="text" class="search-input" placeholder="Search" name="search">
+        </form>
+    </div>
+
+    
+    <div id="result-table-container" >
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Challenge id </th>
+                    <th>User 1</th>
+                    <th>user 2</th>
+                    <th>Screenshot1</th>
+                    <th>Screenshot2</th>
+                    <th>Status 1</th>
+                    <th>Status 2</th>
+                    <th>Select Winner</th> 
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for result in search %}
+
+                <tr>
+                    <td>{{ result['challenge_id'] }}</td>
+                    <td>{{ result['first_user'] }}</td>
+                    <td>{{ result['second_user'] }}</td>
+                    <td><a href = "https://gamemates.in/upload/{{ result['screenshot1'] }}" target="_blank">User 1</a></td>
+                    <td><a href = "https://gamemates.in/upload/{{ result['screenshot2'] }}" target="_blank">User 2</a></td>
+                    <td>{{ result['match_status'] }}</td>
+                    <td>{{ result['match_status2'] }}</td>
+                    <td>{% if result['status'] == "undecided" %}
+                    <form action="/admin/decide_winner" method="POST">
+                        <input type="hidden" name="challenge_id" value="{{ result['challenge_id'] }}">
+                        <label for="users"></label>
+                        <select id="users" name="user">
+                            <option value="{{result['first_user']}}">{{result['first_user']}}</option>
+                            <option value="{{result['second_user']}}">{{result['second_user']}}</option>
+                        </select>
+                        
+                        <button  class="su"  type="submit">Submit</button>
+                        {% elif result['status'] == "decided" %}
+                            <button  class="su" >Winner Decided</button>
+                        {% endif %}
+                    </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

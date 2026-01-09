@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}
+    dashboard
+{% endblock %}
+{% block css %} <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/leaderboard.css') }}"> {% endblock %}
+  {% block content %}
+
+<div class="leaderboard-container">
+  <div class="leaderboard-heading">
+    <h2>All Time</h2> 
+    <div class="monthly-win-container">
+      <h1 class="monthly-win-heading">Top 5 Winners</h1>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="color: azure;">Name</th>
+        <th style="color: white;">Win</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in challenges %}
+      <tr>
+        <td>{{ user[1] }}</td>
+        <td>{{ user[8] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="leaderboard-container">
+  <div class="leaderboard-heading">
+    <h2>Monthly</h2> 
+    <div class="monthly-win-container">
+      <h1 class="monthly-win-heading">Top 5 Winners</h1>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="color: azure;">Name</th>
+        <th style="color: white;">Win</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in monthly %}
+      <tr>
+        <td>{{ user[0] }}</td>
+        <td>{{ user[1] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

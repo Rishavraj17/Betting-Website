@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>   
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+    <title>Document</title>
+    <style>
+        #table-container {
+            overflow-x: auto;
+            max-width: 100%; 
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<script>
+						const Toast1 = Swal.mixin({
+							toast: true,
+							position: "top-end",
+							showConfirmButton: false,
+							timer: 3000,
+							timerProgressBar: true,
+							didOpen: (toast) => {
+								toast.addEventListener('mouseenter', Swal.stopTimer);
+								toast.addEventListener('mouseleave', Swal.resumeTimer);
+							}
+						});
+	
+						Toast1.fire({
+							icon: "{{ category }}",
+							title: "{{ message }}"
+						});
+					</script>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+
+<div id="all-users-section" >
+    <div class="all-users-heading">
+        <h3>All Users</h3><p>Count - {{total_users}}</p>
+        <form action="/admin/search/alluser" method="POST">
+            <input type="text" class="search-input" placeholder="Search" name="search">
+        </form>
+    </div>
+
+    
+    <div id="table-container" >
+        
+        <table>
+            <thead>
+                <tr>
+		    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone no.</th>
+                    <th>User name</th>
+                    <th>Balance</th>
+                    <th>Total Wins</th>
+                    <th>Actions</th>
+                    <th>Ban/Unban</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+<tr>
+    <form action="/admin/balance" method="POST">
+    <td>{{ user['id'] }}</td>
+    <td>{{ user['firstname'] + ' ' + user['lastname'] }}</td>
+    <td>{{ user['phoneno'] }}</td>
+    <td>{{ user['username'] }}</td>
+    <td><input name = "balance" value="{{ user['balance'] }}" min="0" style="border: none;"> </td>
+    <td>{{ user['wins'] }}</td>
+    <td>
+            <input type="hidden" name="username" value="{{ user['username'] }}">
+            <button class="edit-btn" name="edit" type="submit">Update</button>
+        </form>
+
+        <form action="/admin/all_user" method="POST">
+            <input type="hidden" name="username" value="{{ user['username'] }}">
+            <button class="delete-btn" name="delete" type="submit">Delete</button>
+        </form>
+    </td>
+    <td>
+        {% if user['is_banned'] == false %}
+        <form action="/admin/ban_user" method="POST">
+            <input type="hidden" name="user_id" value="{{ user['id'] }}">
+            <button class="deny-btn" type="submit" >Ban user</button>
+        </form> 
+        {% elif user['is_banned'] == true %}
+            <form action="/admin/unban_user" method="POST">
+            <input type="hidden" name="user_id" value="{{ user['id'] }}">
+            <button class="deny-btn" type="submit"> Unban User </button> 
+        </form>    
+        {% endif %}
+    </td>
+
+
+</tr>
+{% endfor %}  
+<div class="pagination  nextpage">
+    {% if page > 1 %}
+    <a href="{{ url_for('admin_alluser', page=page-1) }}">Previous</a>
+{% endif %}
+
+{% for p in range(1, total_pages+1) %}
+    {% if page - 5 <= p <= page + 5 %}
+        <a href="{{ url_for('admin_alluser', page=p) }}" {% if p == page %}class="active"{% endif %}>{{ p }}</a>
+    {% elif p == 1 or p == total_pages %}
+        <a href="{{ url_for('admin_alluser', page=p) }}">{{ p }}</a>
+    {% elif p == page - 6 or p == page + 6 %}
+        <span>...</span>
+    {% endif %}
+{% endfor %}
+
+{% if page < total_pages %}
+    <a href="{{ url_for('admin_alluser', page=page+1) }}" class="next">Next</a>
+{% endif %}
+
+    
+    </div>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
